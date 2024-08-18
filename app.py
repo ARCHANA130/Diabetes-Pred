@@ -18,6 +18,7 @@ clf = RandomForestClassifier()
 clf.fit(X_train, y_train)
 
 # Create the Streamlit app
+
 def main():
     st.title("Diabetes Prediction App")
     st.write("Enter the following information to predict diabetes:")
@@ -52,12 +53,18 @@ def main():
 
         # Make the prediction
         prediction = clf.predict(user_data)
+        
 
         # Display the prediction
         if prediction[0] == 0:
             st.write("You are not diabetic.")
         else:
             st.write("You are diabetic.")
+        # Display a bar chart of the prediction probabilities
+        
+        probabilities = clf.predict_proba(user_data)[0]
+        st.bar_chart(pd.DataFrame(probabilities, index=["Not Diabetic", "Diabetic"], columns=["Probability"]))
+       
 
 if __name__ == "__main__":
     main()
