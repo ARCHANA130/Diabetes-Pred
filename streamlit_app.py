@@ -52,7 +52,28 @@ def main():
     st.write("Enter the following information to predict diabetes:")
 
     # Create input fields for user to enter information
+    
     id = st.text_input("**ID**")
+    # Add custom CSS to style the number inputs
+   
+    st.markdown(
+    """
+    <style>
+    /* Style the input field */
+    input[type=number] {
+        background-color: 	#ffecf2;
+        color: #333333;
+        font-size: 18px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+    }
+
+ 
+    </style>
+    """,
+    unsafe_allow_html=True
+)
     pregnancies = st.number_input("**Number of Pregnancies**", min_value=0, max_value=20, value=0)
     glucose = st.number_input("**Glucose Level**", min_value=0, max_value=200, value=0)
     blood_pressure = st.number_input("**Blood Pressure**", min_value=0, max_value=200, value=0)
