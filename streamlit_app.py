@@ -7,6 +7,33 @@ from sklearn.metrics import accuracy_score
 diabetes_df = pd.read_csv("Diabetes.csv")
 
 # Split the dataset into features and target
+
+# Add custom CSS to make the background more pretty
+
+
+PAGE_CONFIG = {
+    "page_title": "MyApp",
+    "layout": "centered",
+    "initial_sidebar_state": "auto"
+}
+st.set_page_config(**PAGE_CONFIG)
+# Add custom CSS to make the background more pretty
+background_image = """
+<style>
+[data-testid="stAppViewContainer"] > .main {
+    background-image: url("https://plus.unsplash.com/premium_photo-1668104452882-2ae0969bb2cc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
+    background-position: center;  
+    background-repeat: no-repeat;
+}
+</style>
+"""
+
+st.markdown(background_image, unsafe_allow_html=True)
+
+
+
+
 X = diabetes_df.drop("Outcome", axis=1)
 y = diabetes_df["Outcome"]
 
@@ -14,6 +41,7 @@ y = diabetes_df["Outcome"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Train a Random Forest classifier
+
 clf = RandomForestClassifier()
 clf.fit(X_train, y_train)
 
@@ -24,19 +52,40 @@ def main():
     st.write("Enter the following information to predict diabetes:")
 
     # Create input fields for user to enter information
-    id = st.text_input("ID")
-    pregnancies = st.number_input("Number of Pregnancies", min_value=0, max_value=20, value=0)
-    glucose = st.number_input("Glucose Level", min_value=0, max_value=200, value=0)
-    blood_pressure = st.number_input("Blood Pressure", min_value=0, max_value=200, value=0)
-    skin_thickness = st.number_input("Skin Thickness", min_value=0, max_value=100, value=0)
-    insulin = st.number_input("Insulin Level", min_value=0, max_value=1000, value=0)
-    bmi = st.number_input("BMI", min_value=0.0, max_value=60.0, value=0.0, step=0.1)
-    diabetes_pedigree = st.number_input("Diabetes Pedigree Function", min_value=0.0, max_value=3.0, value=0.0, step=0.001)
-   # diabetes_pedigree = st.number_input("Diabetes Pedigree Function", min_value=0, max_value=3, value=0, step=0.001)
-    age = st.number_input("Age", min_value=0, max_value=120, value=0)
+    id = st.text_input("**ID**")
+    pregnancies = st.number_input("**Number of Pregnancies**", min_value=0, max_value=20, value=0)
+    glucose = st.number_input("**Glucose Level**", min_value=0, max_value=200, value=0)
+    blood_pressure = st.number_input("**Blood Pressure**", min_value=0, max_value=200, value=0)
+    skin_thickness = st.number_input("**Skin Thickness**", min_value=0, max_value=100, value=0)
+    insulin = st.number_input("**Insulin Level**", min_value=0, max_value=1000, value=0)
+    bmi = st.number_input("**BMI**", min_value=0.0, max_value=60.0, value=0.0, step=0.1)
+    diabetes_pedigree = st.number_input("**Diabetes Pedigree Function**", min_value=0.0, max_value=3.0, value=0.0, step=0.001)
+    age = st.number_input("**Age**", min_value=0, max_value=120, value=0)
+
 
     # Create a button to trigger the prediction
-    if st.button("Predict"):
+    # Add custom CSS to style the predict button
+    predict_button_style = """
+    <style>
+    div.stButton > button:first-child {
+        background-color:  #9F2B68;
+        color: white;
+        padding: 10px 24px;
+        border: none;
+        border-radius:6px;
+        cursor: pointer;
+        font-size: 16px;
+        
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #DE3163;
+    }
+    </style>
+    """
+    st.markdown(predict_button_style, unsafe_allow_html=True)
+
+    if st.button("**Predict**"):
+        
         # Create a dataframe with the user input
         user_data = pd.DataFrame(
             {   "Id":[id],
@@ -58,12 +107,25 @@ def main():
         # Display the prediction
         if prediction[0] == 0:
             st.write("You are not diabetic.")
+            st.write("**Here are some suggestions to prevent diabetes:**")
+            st.write("- Maintain a healthy weight.")
+            st.write("- Eat a balanced diet rich in fruits, vegetables, and whole grains.")
+            st.write("- Exercise regularly.")
+            st.write("- Avoid sugary drinks and foods high in saturated fats.")
+            st.write("- Don't smoke.")
+            st.write("- Monitor your blood sugar levels if you are at risk.")
         else:
             st.write("You are diabetic.")
-        # Display a bar chart of the prediction probabilities
+            st.write("**Here are some treatments for diabetes:**")
+            st.write("- Monitor your blood sugar levels regularly.")
+            st.write("- Take prescribed medications as directed by your healthcare provider.")
+            st.write("- Follow a healthy eating plan and monitor carbohydrate intake.")
+            st.write("- Engage in regular physical activity.")
+            st.write("- Maintain a healthy weight.")
+            st.write("- Attend regular check-ups with your healthcare provider.")
+            st.write("- Consider insulin therapy if recommended by your healthcare provider.")
         
-        probabilities = clf.predict_proba(user_data)[0]
-        st.bar_chart(pd.DataFrame(probabilities, index=["Not Diabetic", "Diabetic"], columns=["Probability"]))
+      
        
 
 if __name__ == "__main__":
