@@ -48,7 +48,7 @@ clf.fit(X_train, y_train)
 # Create the Streamlit app
 
 def main():
-    st.title("Diabetes Prediction App")
+    st.title("HerHealth")
     st.write("Enter the following information to predict diabetes:")
 
     # Create input fields for user to enter information
@@ -123,28 +123,43 @@ def main():
 
         # Make the prediction
         prediction = clf.predict(user_data)
-        
-
-        # Display the prediction
+        # Display the prediction in a beautiful box
         if prediction[0] == 0:
-            st.write("You are not diabetic.")
-            st.write("**Here are some suggestions to prevent diabetes:**")
-            st.write("- Maintain a healthy weight.")
-            st.write("- Eat a balanced diet rich in fruits, vegetables, and whole grains.")
-            st.write("- Exercise regularly.")
-            st.write("- Avoid sugary drinks and foods high in saturated fats.")
-            st.write("- Don't smoke.")
-            st.write("- Monitor your blood sugar levels if you are at risk.")
+            st.success("**You are not diabetic.**")
+            st.markdown(
+            """
+            <div style="background-color: #ffecf2; padding: 10px; border-radius: 5px;">
+                <h4>Here are some suggestions to prevent diabetes:</h4>
+                <ul>
+                <li>Maintain a healthy weight.</li>
+                <li>Eat a balanced diet rich in fruits, vegetables, and whole grains.</li>
+                <li>Exercise regularly.</li>
+                <li>Avoid sugary drinks and foods high in saturated fats.</li>
+                <li>Don't smoke.</li>
+                <li>Monitor your blood sugar levels if you are at risk.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True
+            )
         else:
-            st.write("You are diabetic.")
-            st.write("**Here are some treatments for diabetes:**")
-            st.write("- Monitor your blood sugar levels regularly.")
-            st.write("- Take prescribed medications as directed by your healthcare provider.")
-            st.write("- Follow a healthy eating plan and monitor carbohydrate intake.")
-            st.write("- Engage in regular physical activity.")
-            st.write("- Maintain a healthy weight.")
-            st.write("- Attend regular check-ups with your healthcare provider.")
-            st.write("- Consider insulin therapy if recommended by your healthcare provider.")
+            st.error("**You are diabetic.**")
+            st.markdown(
+            """
+            <div style="background-color: #ffecf2; padding: 10px; border-radius: 5px;">
+                <h4>Here are some treatments for diabetes:</h4>
+                <ul>
+                <li>Monitor your blood sugar levels regularly.</li>
+                <li>Take prescribed medications as directed by your healthcare provider.</li>
+                <li>Follow a healthy eating plan and monitor carbohydrate intake.</li>
+                <li>Engage in regular physical activity.</li>
+                <li>Maintain a healthy weight.</li>
+                <li>Attend regular check-ups with your healthcare provider.</li>
+                <li>Consider insulin therapy if recommended by your healthcare provider.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True
+            )
+
         
       
        
