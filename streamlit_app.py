@@ -12,7 +12,7 @@ diabetes_df = pd.read_csv("Diabetes.csv")
 
 
 PAGE_CONFIG = {
-    "page_title": "MyApp",
+    "page_title": "HerHealth",
     "layout": "centered",
     "initial_sidebar_state": "auto"
 }
